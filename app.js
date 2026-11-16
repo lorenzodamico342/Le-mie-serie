@@ -213,15 +213,22 @@ function fillPickers(season, episode) {
   const nS = known ? seasons.length : 20;
   season = Math.min(Math.max(1, season || 1), nS);
   $('fS').innerHTML = Array.from({ length: nS }, (_, i) =>
-    `<option value="${i + 1}">Stagione ${i + 1}${known ? ` · ${seasons[i]} ep.` : ''}</option>`).join('');
+    `<option value="${i + 1}">Stagione ${i + 1}</option>`).join('');
   $('fS').value = season;
   const nE = known ? seasons[season - 1] : 40;
   episode = Math.min(Math.max(0, episode || 0), nE);
   $('fE').innerHTML = `<option value="0">Nessuno ancora</option>` + Array.from({ length: nE }, (_, i) =>
     `<option value="${i + 1}">Episodio ${i + 1}${known && i + 1 === nE ? ' (ultimo)' : ''}</option>`).join('');
   $('fE').value = episode;
-  $('fPickHint').hidden = known;
+  syncPick();
 }
+// Con stato "Finita" stagione ed episodio non servono: è vista tutta.
+function syncPick() {
+  const done = $('fStatus').value === 'done';
+  $('fPick').hidden = done;
+  $('fPickHint').hidden = done || parseSeasons().length > 0;
+}
+$('fStatus').addEventListener('change', syncPick);
 $('fS').addEventListener('change', () => fillPickers(+$('fS').value, 0));
 $('fSeasons').addEventListener('input', () => fillPickers(+$('fS').value, +$('fE').value));
 
@@ -243,6 +250,8 @@ $('form').addEventListener('submit', async (e) => {
   const seasons = parseSeasons();
   let season = Math.max(1, parseInt($('fS').value, 10) || 1), episode = Math.max(0, parseInt($('fE').value, 10) || 0);
   if (seasons.length) { season = Math.min(season, seasons.length); episode = Math.min(episode, seasons[season - 1]); }
+  // Finita = tutti gli episodi di tutte le stagioni visti.
+  if ($('fStatus').value === 'done' && seasons.length) { season = seasons.length; episode = seasons[seasons.length - 1]; }
   const v = { title: $('fTitle').value.trim(), status: $('fStatus').value, platform: $('fWhere').value.trim(), seasons, season, episode, note: $('fNote').value.trim(), ...(found || {}) };
   if (!v.title) return;
   normalize(v);
