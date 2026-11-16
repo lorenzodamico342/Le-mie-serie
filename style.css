@@ -1,13 +1,13 @@
-/* Le mie serie: stile da guida TV. Rosso segnale, bianco, nero, giallo per "in visione". */
-:root{color-scheme:light dark;--bg:light-dark(#ffffff,#111111);--ink:light-dark(#141414,#f2f2f2);--mut:light-dark(#5d5d5d,#a8a8a8);--line:light-dark(#e6e6e6,#2a2a2a);--card:light-dark(#fafafa,#1a1a1a);--red:#e2352a;--red2:light-dark(#c42a20,#ff5a4e);--yel:#ffd23f;--track:light-dark(#ececec,#2c2c2c)}
-@supports not (color:light-dark(#000,#fff)){:root{--bg:#fff;--ink:#141414;--mut:#5d5d5d;--line:#e6e6e6;--card:#fafafa;--red2:#c42a20;--track:#ececec}
-  @media(prefers-color-scheme:dark){:root{--bg:#111;--ink:#f2f2f2;--mut:#a8a8a8;--line:#2a2a2a;--card:#1a1a1a;--red2:#ff5a4e;--track:#2c2c2c}}}
+/* Le mie serie: palette denim. Blu jeans, senape come le cuciture, fondo blu notte in tema scuro. */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0d1219);--ink:light-dark(#121821,#eef2f8);--mut:light-dark(#5a6475,#9aa6b8);--line:light-dark(#e2e7ef,#222c3a);--card:light-dark(#f5f7fb,#141b26);--brand:#3c6aa3;--brand2:light-dark(#2d5c94,#8db6ec);--bar:light-dark(#3c6aa3,#6c9cdb);--yel:#f2b84b;--err:light-dark(#c0392b,#ff7d72);--track:light-dark(#e6ebf2,#1f2938);--top1:#1d3657;--top2:#3a679f}
+@supports not (color:light-dark(#000,#fff)){:root{--bg:#fff;--ink:#121821;--mut:#5a6475;--line:#e2e7ef;--card:#f5f7fb;--brand2:#2d5c94;--bar:#3c6aa3;--err:#c0392b;--track:#e6ebf2}
+  @media(prefers-color-scheme:dark){:root{--bg:#0d1219;--ink:#eef2f8;--mut:#9aa6b8;--line:#222c3a;--card:#141b26;--brand2:#8db6ec;--bar:#6c9cdb;--err:#ff7d72;--track:#1f2938}}}
 *{box-sizing:border-box;min-width:0}
 [hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Inter Tight",system-ui,sans-serif;overflow-x:clip;-webkit-tap-highlight-color:transparent}
 .band{padding:clamp(22px,4vw,44px) max(5vw,16px,env(safe-area-inset-right));padding-bottom:max(22px,env(safe-area-inset-bottom))}
 .wrap{max-width:1040px;margin:0 auto}.narrow{max-width:460px}
-.top{background:var(--red);color:#fff;padding-top:max(22px,calc(env(safe-area-inset-top) + 12px));padding-bottom:26px}
+.top{background:linear-gradient(180deg,var(--top1) 0%,var(--top2) 100%);color:#fff;padding-top:max(22px,calc(env(safe-area-inset-top) + 12px));padding-bottom:26px}
 .hrow{display:flex;justify-content:space-between;align-items:center;gap:12px}
 h1{font:400 clamp(38px,7vw,64px)/1 Anton,Impact,sans-serif;margin:0;letter-spacing:.5px;text-transform:uppercase}
 .big{font:400 36px/1.1 Anton,Impact,sans-serif;text-transform:uppercase;margin:8px 0}
@@ -20,23 +20,23 @@ h1{font:400 clamp(38px,7vw,64px)/1 Anton,Impact,sans-serif;margin:0;letter-spaci
 input,select,textarea{font:16px "Inter Tight",sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:3px solid var(--yel);outline-offset:2px}
 #q{max-width:240px;height:44px}
-.btn{height:44px;padding:0 18px;border-radius:10px;border:0;background:var(--red);color:#fff;font:700 15px "Inter Tight",sans-serif;cursor:pointer;white-space:nowrap}
+.btn{height:44px;padding:0 18px;border-radius:10px;border:0;background:var(--brand);color:#fff;font:700 15px "Inter Tight",sans-serif;cursor:pointer;white-space:nowrap}
 .btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--line)}
 .btn:disabled{opacity:.5}
-.link{background:none;border:0;color:var(--red2);font:600 14px "Inter Tight",sans-serif;cursor:pointer;padding:10px 0;text-decoration:underline}
+.link{background:none;border:0;color:var(--brand2);font:600 14px "Inter Tight",sans-serif;cursor:pointer;padding:10px 0;text-decoration:underline}
 .link.light{color:#fff}
 .list{list-style:none;margin:0;padding:0}
 .row{display:grid;grid-template-columns:56px 120px minmax(0,1fr) auto;gap:6px 18px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}
 .poster{width:56px;aspect-ratio:2/3;border-radius:6px;background:var(--track);object-fit:cover;display:block}
-.code{font:400 38px/1 Anton,Impact,sans-serif;color:var(--red2);white-space:nowrap}
+.code{font:400 38px/1 Anton,Impact,sans-serif;color:var(--brand2);white-space:nowrap}
 .code small{display:block;font:600 12px "Inter Tight",sans-serif;color:var(--mut);margin-top:6px}
 .t{font-weight:700;font-size:19px;line-height:1.25;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
 .tag{font-size:12px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--track);color:var(--ink)}
-.tag.on{background:var(--yel);color:#141414}.tag.done{background:var(--ink);color:var(--bg)}
+.tag.on{background:var(--yel);color:#2a1d05}.tag.done{background:var(--ink);color:var(--bg)}
 .meta{color:var(--mut);font-size:14px;margin-top:2px}
 .ticks{display:flex;gap:4px;margin-top:10px;max-width:520px}
 .tk{flex:1;height:8px;border-radius:2px;background:var(--track);overflow:hidden}
-.tk i{display:block;height:100%;background:var(--red)}
+.tk i{display:block;height:100%;background:var(--bar);border-radius:2px}
 .note{font-size:14px;margin-top:6px;color:var(--mut);font-style:italic}
 .acts{display:flex;gap:6px;align-items:center}
 .ic{width:44px;height:44px;border-radius:10px;border:1.5px solid var(--line);background:none;color:var(--ink);font:700 20px "Inter Tight",sans-serif;cursor:pointer;display:grid;place-items:center}
@@ -48,24 +48,24 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
 .credit{color:var(--mut);font-size:12px;margin:4px 0 0}
 .ov{position:fixed;inset:0;background:rgb(0 0 0/.55);display:none;place-items:center;padding:16px;z-index:9}
 .ov.open{display:grid}
-.dlg{background:var(--bg);color:var(--ink);border-radius:16px;width:min(540px,100%);max-height:92vh;overflow:auto;padding:24px;border-top:8px solid var(--red)}
+.dlg{background:var(--bg);color:var(--ink);border-radius:16px;width:min(540px,100%);max-height:92vh;overflow:auto;padding:24px;border-top:8px solid var(--brand)}
 .dlg h2{font:400 30px/1.1 Anton,Impact,sans-serif;margin:0 0 16px;text-transform:uppercase}
 .f{display:grid;gap:14px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 label{display:grid;gap:5px;font-size:14px;font-weight:600}
 .hint{font-weight:400;color:var(--mut);font-size:13px}
 .dacts{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:14px}
-.del{margin-right:auto;background:none;border:0;color:var(--red2);font:700 15px "Inter Tight",sans-serif;cursor:pointer;height:44px}
+.del{margin-right:auto;background:none;border:0;color:var(--err);font:700 15px "Inter Tight",sans-serif;cursor:pointer;height:44px}
 .finder{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px;display:grid;gap:10px}
 .rowf{display:flex;gap:8px}.rowf input{flex:1}
 .fstat{font-size:14px;color:var(--mut);min-height:1.2em;margin:0}
-.fstat.err{color:var(--red2)}
+.fstat.err{color:var(--err)}
 .results{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .results button{width:100%;display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:6px;color:var(--ink);font:600 15px "Inter Tight",sans-serif;cursor:pointer;min-height:44px}
 .results img,.results .ph{width:40px;aspect-ratio:2/3;border-radius:4px;object-fit:cover;background:var(--track)}
 .results small{display:block;color:var(--mut);font-weight:400}
 .found{display:grid;grid-template-columns:64px 1fr;gap:12px;border-left:4px solid var(--yel);padding:4px 0 4px 12px;font-size:14px}
 .found img{width:64px;border-radius:6px}.found b{font-size:16px}.found p{margin:4px 0 0;color:var(--mut)}
-.spin{display:inline-block;width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--red);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-1px;margin-right:6px}
+.spin{display:inline-block;width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--brand);border-radius:50%;animation:sp .8s linear infinite;vertical-align:-1px;margin-right:6px}
 @keyframes sp{to{transform:rotate(1turn)}}
 .toast{position:fixed;left:50%;bottom:max(18px,env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;display:none;gap:14px;align-items:center;z-index:10;max-width:calc(100% - 32px)}
 .toast.show{display:flex}.toast button{background:none;border:0;color:var(--yel);font:700 14px "Inter Tight",sans-serif;cursor:pointer;padding:6px 0}
@@ -79,7 +79,7 @@ label{display:grid;gap:5px;font-size:14px;font-weight:600}
 }
 
 /* ---------- iPhone: aree sicure, barra fissa, pannello dal basso ---------- */
-.sb{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:var(--red);z-index:30}
+.sb{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:var(--top1);z-index:30}
 .fstat:empty,.results:empty,#fFound:empty{display:none}
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg)}
 .dacts{position:sticky;bottom:calc(-24px - env(safe-area-inset-bottom,0px));background:var(--bg);margin:14px -24px calc(-24px - env(safe-area-inset-bottom,0px));padding:12px 24px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
