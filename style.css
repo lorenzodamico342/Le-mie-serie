@@ -77,3 +77,27 @@ label{display:grid;gap:5px;font-size:14px;font-weight:600}
   .poster{grid-area:p;width:48px}.code{grid-area:c;font-size:32px}.acts{grid-area:a}.info{grid-area:i}
   #q{max-width:none;flex:1 1 100%}.two{grid-template-columns:1fr}
 }
+
+/* ---------- iPhone: aree sicure, barra fissa, pannello dal basso ---------- */
+.sb{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:var(--red);z-index:30}
+.fstat:empty,.results:empty,#fFound:empty{display:none}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg)}
+.dacts{position:sticky;bottom:calc(-24px - env(safe-area-inset-bottom,0px));background:var(--bg);margin:14px -24px calc(-24px - env(safe-area-inset-bottom,0px));padding:12px 24px calc(14px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+@media(max-width:640px){
+  .top{padding-top:calc(env(safe-area-inset-top,0px) + 14px);padding-bottom:18px}
+  h1{font-size:34px}
+  .stats{margin-top:8px;gap:4px 18px;font-size:14px}.stats b{font-size:22px}
+  .bar{padding-block:12px;gap:8px;margin-inline:calc(-1*max(5vw,16px));padding-inline:max(5vw,16px)}
+  .tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:calc(-1*max(5vw,16px));padding-inline:max(5vw,16px);flex:1 1 100%}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;height:36px;font-size:14px}
+  #add{position:fixed;right:max(18px,env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 18px);width:60px;height:60px;border-radius:50%;padding:0;z-index:8;box-shadow:0 6px 18px rgb(0 0 0/.35)}
+  #add .lbl{display:none}#add .plus{font-size:32px;line-height:1;font-weight:500}
+  #app{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 96px)}
+  .toast{bottom:calc(env(safe-area-inset-bottom,0px) + 92px)}
+  .ov{place-items:end stretch;padding:calc(env(safe-area-inset-top,0px) + 12px) 0 0}
+  .dlg{width:100%;max-height:100%;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));border-top-width:6px}
+  .dlg h2{font-size:26px;margin-bottom:12px}
+  .dacts{bottom:calc(-20px - env(safe-area-inset-bottom,0px));margin:14px -20px calc(-20px - env(safe-area-inset-bottom,0px));padding:12px 20px calc(14px + env(safe-area-inset-bottom,0px))}
+  .dacts .btn{flex:1}
+}

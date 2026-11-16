@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+<div class="sb" aria-hidden="true"></div>
 <header class="band top"><div class="wrap">
   <div class="hrow"><h1>Le mie serie</h1><button class="link light" id="logout" hidden>Esci</button></div>
   <div class="stats" id="stats"></div>
@@ -46,7 +47,7 @@
   <div class="bar">
     <div class="tabs" id="tabs" role="group" aria-label="Filtra per stato"></div>
     <input id="q" type="search" placeholder="Cerca tra le tue serie" aria-label="Cerca tra le tue serie">
-    <button class="btn" id="add">+ Aggiungi serie</button>
+    <button class="btn" id="add" aria-label="Aggiungi serie"><span class="plus">+</span><span class="lbl"> Aggiungi serie</span></button>
   </div>
   <ul class="list" id="list"><li class="empty">Carico le tue serie…</li></ul>
   <div class="foot">
