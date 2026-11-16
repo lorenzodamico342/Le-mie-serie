@@ -76,9 +76,10 @@
     </div>
     <label>Episodi per stagione <span class="hint">separati da virgola, es. 10, 10, 8</span><input id="fSeasons" inputmode="numeric" placeholder="10, 10, 8"></label>
     <div class="two">
-      <label>Stagione attuale<input id="fS" type="number" min="1" value="1"></label>
-      <label>Ultimo episodio visto<input id="fE" type="number" min="0" value="0"></label>
+      <label>Stagione attuale<select id="fS"></select></label>
+      <label>Ultimo episodio visto<select id="fE"></select></label>
     </div>
+    <p class="hint" id="fPickHint" hidden style="margin:-6px 0 0">Cerca la serie o compila "Episodi per stagione" per avere l'elenco esatto di stagioni ed episodi.</p>
     <label>Note<textarea id="fNote" rows="2" maxlength="200"></textarea></label>
   </div>
   <div class="dacts">

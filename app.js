@@ -194,7 +194,7 @@ async function choose(id) {
     found = { tmdb_id: d.id, year: d.year, genre: d.genre, plot: d.plot, poster: d.poster, ongoing: d.ongoing };
     $('fTitle').value = d.title;
     if (d.platform) $('fWhere').value = d.platform;
-    if (d.seasons.length) $('fSeasons').value = d.seasons.join(', ');
+    if (d.seasons.length) { $('fSeasons').value = d.seasons.join(', '); fillPickers(+$('fS').value, +$('fE').value); }
     $('fStat').textContent = 'Ho compilato i campi qui sotto: scegli a che episodio sei e salva.';
     $('fFound').innerHTML = `<div class="found">${d.poster ? `<img src="${IMG(d.poster)}" alt="">` : '<span></span>'}<div>
       <b>${esc(d.title)}</b><br>${[d.year, d.genre, d.seasons.length ? `${d.seasons.length} stagioni · ${d.seasons.reduce((a, b) => a + b, 0)} episodi` : '', d.ongoing ? 'in corso' : 'conclusa'].filter(Boolean).map(esc).join(' · ')}
@@ -205,13 +205,33 @@ async function choose(id) {
 }
 
 /* ---------- modulo ---------- */
+const parseSeasons = () => $('fSeasons').value.split(/[,;\s]+/).map((n) => parseInt(n, 10)).filter((n) => n > 0 && n < 1000);
+// Riempie i menu "Stagione" ed "Episodio" in base agli episodi usciti.
+function fillPickers(season, episode) {
+  const seasons = parseSeasons();
+  const known = seasons.length > 0;
+  const nS = known ? seasons.length : 20;
+  season = Math.min(Math.max(1, season || 1), nS);
+  $('fS').innerHTML = Array.from({ length: nS }, (_, i) =>
+    `<option value="${i + 1}">Stagione ${i + 1}${known ? ` · ${seasons[i]} ep.` : ''}</option>`).join('');
+  $('fS').value = season;
+  const nE = known ? seasons[season - 1] : 40;
+  episode = Math.min(Math.max(0, episode || 0), nE);
+  $('fE').innerHTML = `<option value="0">Nessuno ancora</option>` + Array.from({ length: nE }, (_, i) =>
+    `<option value="${i + 1}">Episodio ${i + 1}${known && i + 1 === nE ? ' (ultimo)' : ''}</option>`).join('');
+  $('fE').value = episode;
+  $('fPickHint').hidden = known;
+}
+$('fS').addEventListener('change', () => fillPickers(+$('fS').value, 0));
+$('fSeasons').addEventListener('input', () => fillPickers(+$('fS').value, +$('fE').value));
+
 function openForm(x) {
   editing = x ? x.id : null; found = null;
   $('dt').textContent = x ? 'Modifica serie' : 'Nuova serie';
   $('fFind').value = x?.title || ''; $('fStat').textContent = ''; $('fResults').innerHTML = ''; $('fFound').innerHTML = '';
   $('fGo').textContent = x ? 'Aggiorna info' : 'Cerca';
   $('fTitle').value = x?.title || ''; $('fStatus').value = x?.status || 'watching'; $('fWhere').value = x?.platform || '';
-  $('fSeasons').value = x ? x.seasons.join(', ') : ''; $('fS').value = x?.season || 1; $('fE').value = x?.episode ?? 0;
+  $('fSeasons').value = x ? x.seasons.join(', ') : ''; fillPickers(x?.season || 1, x?.episode ?? 0);
   $('fNote').value = x?.note || ''; $('fDel').style.display = x ? '' : 'none';
   $('ov').classList.add('open');
   setTimeout(() => $(x ? 'fTitle' : 'fFind').focus(), 30);
@@ -220,7 +240,7 @@ const closeAll = () => document.querySelectorAll('.ov.open').forEach((o) => o.cl
 
 $('form').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const seasons = $('fSeasons').value.split(/[,;\s]+/).map((n) => parseInt(n, 10)).filter((n) => n > 0 && n < 1000);
+  const seasons = parseSeasons();
   let season = Math.max(1, parseInt($('fS').value, 10) || 1), episode = Math.max(0, parseInt($('fE').value, 10) || 0);
   if (seasons.length) { season = Math.min(season, seasons.length); episode = Math.min(episode, seasons[season - 1]); }
   const v = { title: $('fTitle').value.trim(), status: $('fStatus').value, platform: $('fWhere').value.trim(), seasons, season, episode, note: $('fNote').value.trim(), ...(found || {}) };
