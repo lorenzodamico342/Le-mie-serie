@@ -75,12 +75,12 @@
         <option value="todo">Da iniziare</option><option value="done">Finita</option></select></label>
       <label>Dove la guardi<input id="fWhere" maxlength="30" placeholder="Netflix, Prime…"></label>
     </div>
-    <label>Episodi per stagione <span class="hint">separati da virgola, es. 10, 10, 8</span><input id="fSeasons" inputmode="numeric" placeholder="10, 10, 8"></label>
+    <input type="hidden" id="fSeasons">
     <div class="two" id="fPick">
       <label>Stagione attuale<select id="fS"></select></label>
       <label>Ultimo episodio visto<select id="fE"></select></label>
     </div>
-    <p class="hint" id="fPickHint" hidden style="margin:-6px 0 0">Cerca la serie o compila "Episodi per stagione" per avere l'elenco esatto di stagioni ed episodi.</p>
+    <p class="hint" id="fPickHint" hidden style="margin:-6px 0 0">Cerca la serie qui sopra per avere l'elenco esatto di stagioni ed episodi.</p>
     <label>Note<textarea id="fNote" rows="2" maxlength="200"></textarea></label>
   </div>
   <div class="dacts">
