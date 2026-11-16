@@ -60,15 +60,24 @@ $('loginForm').addEventListener('submit', async (e) => {
     return;
   }
   const email = $('email').value.trim();
+  const password = $('pwd').value;
   $('loginMsg').className = 'fstat';
+  if (password) {
+    $('loginMsg').textContent = 'Accesso in corso…';
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if (error) { $('loginMsg').className = 'fstat err'; $('loginMsg').textContent = 'Email o password non corrette.'; }
+    else { $('loginMsg').textContent = ''; $('pwd').value = ''; }
+    return;
+  }
   $('loginMsg').textContent = 'Invio in corso…';
   const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin } });
-  if (error) { $('loginMsg').className = 'fstat err'; $('loginMsg').textContent = 'Non sono riuscito a mandare il codice: ' + (/load failed|failed to fetch|networkerror/i.test(error.message) ? 'non riesco a raggiungere Supabase. Controlla l\'indirizzo in config.js.' : error.message); }
+  if (error) { $('loginMsg').className = 'fstat err'; $('loginMsg').textContent = 'Non sono riuscito a mandare il codice: ' + (/load failed|failed to fetch|networkerror/i.test(error.message) ? 'non riesco a raggiungere Supabase. Controlla l\'indirizzo in config.js.' : /rate limit/i.test(error.message) ? 'troppe email inviate di recente. Riprova più tardi o accedi con la password.' : error.message); }
   else {
     $('loginMsg').textContent = `Fatto! Ti ho mandato un'email a ${email}: copia il codice e scrivilo qui sotto.`;
     $('codeForm').hidden = false; $('code').focus();
   }
 });
+$('pwd').addEventListener('input', () => { $('loginBtn').textContent = $('pwd').value ? 'Accedi' : 'Mandami il codice'; });
 $('codeForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const token = $('code').value.replace(/\D/g, '');

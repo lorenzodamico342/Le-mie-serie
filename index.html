@@ -28,7 +28,9 @@
   <p>Ti mando un'email con un codice (e un link): inseriscilo qui e sei dentro, senza password. Le tue serie restano sincronizzate su telefono e computer.</p>
   <form id="loginForm" class="f">
     <label>Email<input id="email" type="email" required autocomplete="email" placeholder="nome@esempio.it"></label>
-    <button class="btn" type="submit">Mandami il codice</button>
+    <label>Password <span class="hint">se l'hai impostata; lasciala vuota per ricevere un codice via email</span>
+      <input id="pwd" type="password" autocomplete="current-password"></label>
+    <button class="btn" type="submit" id="loginBtn">Mandami il codice</button>
     <p class="fstat" id="loginMsg" role="status"></p>
   </form>
   <form id="codeForm" class="f" hidden style="margin-top:18px">
