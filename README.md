@@ -1,4 +1,4 @@
-# Le mie serie: guida per metterla online
+# Where Was I? (ex "Le mie serie"): guida per metterla online
 
 Un'app installabile sul telefono (PWA) per tenere traccia delle serie TV e dell'episodio a cui sei arrivato.
 
