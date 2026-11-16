@@ -222,11 +222,11 @@ function fillPickers(season, episode) {
   $('fE').value = episode;
   syncPick();
 }
-// Con stato "Finita" stagione ed episodio non servono: è vista tutta.
+// Con stato "Finita" o "Da iniziare" stagione ed episodio non servono.
 function syncPick() {
-  const done = $('fStatus').value === 'done';
-  $('fPick').hidden = done;
-  $('fPickHint').hidden = done || parseSeasons().length > 0;
+  const fixed = ['done', 'todo'].includes($('fStatus').value);
+  $('fPick').hidden = fixed;
+  $('fPickHint').hidden = fixed || parseSeasons().length > 0;
 }
 $('fStatus').addEventListener('change', syncPick);
 $('fS').addEventListener('change', () => fillPickers(+$('fS').value, 0));
@@ -252,6 +252,8 @@ $('form').addEventListener('submit', async (e) => {
   if (seasons.length) { season = Math.min(season, seasons.length); episode = Math.min(episode, seasons[season - 1]); }
   // Finita = tutti gli episodi di tutte le stagioni visti.
   if ($('fStatus').value === 'done' && seasons.length) { season = seasons.length; episode = seasons[seasons.length - 1]; }
+  // Da iniziare = nessun episodio visto.
+  if ($('fStatus').value === 'todo') { season = 1; episode = 0; }
   const v = { title: $('fTitle').value.trim(), status: $('fStatus').value, platform: $('fWhere').value.trim(), seasons, season, episode, note: $('fNote').value.trim(), ...(found || {}) };
   if (!v.title) return;
   normalize(v);
