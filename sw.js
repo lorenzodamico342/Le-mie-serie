@@ -1,6 +1,6 @@
 // Service worker: fa aprire l'app anche senza rete (mostra l'ultima lista salvata).
 // Quando modifichi i file dell'app, aumenta il numero di versione qui sotto.
-const VERSION = 'serie-v1';
+const VERSION = 'serie-v2';
 const SHELL = ['/', '/index.html', '/style.css', '/app.js', '/config.js', '/manifest.webmanifest', '/icons/icon-192.png'];
 
 self.addEventListener('install', (e) => {

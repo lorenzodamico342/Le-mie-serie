@@ -54,11 +54,16 @@ async function showView(session) {
 }
 $('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+  if (SUPABASE_URL.includes('INCOLLA-QUI')) {
+    $('loginMsg').className = 'fstat err';
+    $('loginMsg').textContent = 'Manca la configurazione: inserisci URL e chiave di Supabase nel file config.js (vedi README).';
+    return;
+  }
   const email = $('email').value.trim();
   $('loginMsg').className = 'fstat';
   $('loginMsg').textContent = 'Invio in corso…';
   const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin } });
-  if (error) { $('loginMsg').className = 'fstat err'; $('loginMsg').textContent = 'Non sono riuscito a mandare il link: ' + error.message; }
+  if (error) { $('loginMsg').className = 'fstat err'; $('loginMsg').textContent = 'Non sono riuscito a mandare il link: ' + (/load failed|failed to fetch|networkerror/i.test(error.message) ? 'non riesco a raggiungere Supabase. Controlla l\'indirizzo in config.js.' : error.message); }
   else $('loginMsg').textContent = `Fatto! Apri l'email che ti ho mandato a ${email} e tocca il link. Se usi l'app installata sul telefono, apri il link e poi torna qui.`;
 });
 $('logout').addEventListener('click', async () => { await sb.auth.signOut(); shows = []; cacheWrite(); });
