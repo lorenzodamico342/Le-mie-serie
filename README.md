@@ -70,9 +70,9 @@ Senza questo passaggio il link nell'email ti riporterebbe alla pagina sbagliata.
 - **iPhone**: apri l'indirizzo con **Safari** → pulsante **Condividi** → **Aggiungi alla schermata Home**.
 - **Android**: apri l'indirizzo con **Chrome** → menu ⋮ → **Installa app** (o "Aggiungi a schermata Home").
 
-Accedi con la tua email e apri il link che ricevi.
+Accedi con la tua email e inserisci il **codice** che ricevi.
 
-> **Su iPhone:** il link dell'email si apre in Safari, non nell'app installata. La prima volta conviene fare l'accesso da Safari e *poi* aggiungere l'app alla Home. Se l'app installata ti chiede di nuovo l'accesso, rifallo da lì.
+> **Importante, una volta sola:** in Supabase apri **Authentication → Emails → Magic Link** (o "Email Templates") e aggiungi al testo dell'email la riga `Il tuo codice: {{ .Token }}`, poi salva. Senza questa riga l'email contiene solo il link. Su iPhone il link si apre in Safari, che non condivide l'accesso con l'app installata sulla Home.
 
 ## 7. Importa le serie che avevi
 

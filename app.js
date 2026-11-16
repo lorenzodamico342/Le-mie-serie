@@ -63,8 +63,20 @@ $('loginForm').addEventListener('submit', async (e) => {
   $('loginMsg').className = 'fstat';
   $('loginMsg').textContent = 'Invio in corso…';
   const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin } });
-  if (error) { $('loginMsg').className = 'fstat err'; $('loginMsg').textContent = 'Non sono riuscito a mandare il link: ' + (/load failed|failed to fetch|networkerror/i.test(error.message) ? 'non riesco a raggiungere Supabase. Controlla l\'indirizzo in config.js.' : error.message); }
-  else $('loginMsg').textContent = `Fatto! Apri l'email che ti ho mandato a ${email} e tocca il link. Se usi l'app installata sul telefono, apri il link e poi torna qui.`;
+  if (error) { $('loginMsg').className = 'fstat err'; $('loginMsg').textContent = 'Non sono riuscito a mandare il codice: ' + (/load failed|failed to fetch|networkerror/i.test(error.message) ? 'non riesco a raggiungere Supabase. Controlla l\'indirizzo in config.js.' : error.message); }
+  else {
+    $('loginMsg').textContent = `Fatto! Ti ho mandato un'email a ${email}: copia il codice e scrivilo qui sotto.`;
+    $('codeForm').hidden = false; $('code').focus();
+  }
+});
+$('codeForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const token = $('code').value.replace(/\D/g, '');
+  if (token.length < 6) { $('codeMsg').className = 'fstat err'; $('codeMsg').textContent = 'Il codice è di almeno 6 cifre.'; return; }
+  $('codeMsg').className = 'fstat'; $('codeMsg').textContent = 'Controllo il codice…';
+  const { error } = await sb.auth.verifyOtp({ email: $('email').value.trim(), token, type: 'email' });
+  if (error) { $('codeMsg').className = 'fstat err'; $('codeMsg').textContent = 'Codice non valido o scaduto. Richiedine uno nuovo.'; }
+  else { $('codeMsg').textContent = ''; $('code').value = ''; $('codeForm').hidden = true; $('loginMsg').textContent = ''; }
 });
 $('logout').addEventListener('click', async () => { await sb.auth.signOut(); shows = []; cacheWrite(); });
 sb.auth.onAuthStateChange((_evt, session) => { if ((session?.user?.id || null) !== (user?.id || null)) showView(session); });

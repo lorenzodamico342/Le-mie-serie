@@ -25,11 +25,17 @@
 <!-- Accesso -->
 <main class="band" id="login" hidden><div class="wrap narrow">
   <h2 class="big">Accedi</h2>
-  <p>Ti mando un link via email: lo apri e sei dentro, senza password. Le tue serie restano sincronizzate su telefono e computer.</p>
+  <p>Ti mando un'email con un codice (e un link): inseriscilo qui e sei dentro, senza password. Le tue serie restano sincronizzate su telefono e computer.</p>
   <form id="loginForm" class="f">
     <label>Email<input id="email" type="email" required autocomplete="email" placeholder="nome@esempio.it"></label>
-    <button class="btn" type="submit">Mandami il link</button>
+    <button class="btn" type="submit">Mandami il codice</button>
     <p class="fstat" id="loginMsg" role="status"></p>
+  </form>
+  <form id="codeForm" class="f" hidden style="margin-top:18px">
+    <label>Codice ricevuto via email <span class="hint">se sei nell'app installata, scrivi qui il codice invece di aprire il link</span>
+      <input id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456"></label>
+    <button class="btn" type="submit">Entra</button>
+    <p class="fstat" id="codeMsg" role="status"></p>
   </form>
 </div></main>
 
