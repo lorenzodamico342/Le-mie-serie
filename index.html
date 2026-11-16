@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Le mie serie</title>
+<meta name="theme-color" content="#e2352a">
+<meta name="description" content="Tieni traccia delle serie TV che guardi e dell'episodio a cui sei arrivato.">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Le mie serie">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="band top"><div class="wrap">
+  <div class="hrow"><h1>Le mie serie</h1><button class="link light" id="logout" hidden>Esci</button></div>
+  <div class="stats" id="stats"></div>
+</div></header>
+
+<!-- Accesso -->
+<main class="band" id="login" hidden><div class="wrap narrow">
+  <h2 class="big">Accedi</h2>
+  <p>Ti mando un link via email: lo apri e sei dentro, senza password. Le tue serie restano sincronizzate su telefono e computer.</p>
+  <form id="loginForm" class="f">
+    <label>Email<input id="email" type="email" required autocomplete="email" placeholder="nome@esempio.it"></label>
+    <button class="btn" type="submit">Mandami il link</button>
+    <p class="fstat" id="loginMsg" role="status"></p>
+  </form>
+</div></main>
+
+<!-- Elenco -->
+<main class="band" id="app" hidden style="padding-top:0"><div class="wrap">
+  <div class="bar">
+    <div class="tabs" id="tabs" role="group" aria-label="Filtra per stato"></div>
+    <input id="q" type="search" placeholder="Cerca tra le tue serie" aria-label="Cerca tra le tue serie">
+    <button class="btn" id="add">+ Aggiungi serie</button>
+  </div>
+  <ul class="list" id="list"><li class="empty">Carico le tue serie…</li></ul>
+  <div class="foot">
+    <span id="save" role="status"></span>
+    <span><button class="link" id="importBtn">Importa dati</button></span>
+  </div>
+  <p class="credit">Dati su serie e locandine da TMDB. Questa app usa le API di TMDB ma non è approvata né certificata da TMDB.</p>
+</div></main>
+
+<!-- Modulo serie -->
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="dt"><form class="dlg" id="form">
+  <h2 id="dt">Nuova serie</h2>
+  <div class="finder">
+    <label for="fFind">Cerca la serie <span class="hint">scrivi il nome e scegli dall'elenco</span></label>
+    <div class="rowf"><input id="fFind" placeholder="Es. Stranger Things" autocomplete="off"><button type="button" class="btn" id="fGo">Cerca</button></div>
+    <div class="fstat" id="fStat" role="status"></div>
+    <ul class="results" id="fResults"></ul>
+    <div id="fFound"></div>
+  </div>
+  <div class="f">
+    <label>Titolo<input id="fTitle" required maxlength="80"></label>
+    <div class="two">
+      <label>Stato<select id="fStatus">
+        <option value="watching">In visione</option><option value="paused">In pausa</option>
+        <option value="todo">Da iniziare</option><option value="done">Finita</option></select></label>
+      <label>Dove la guardi<input id="fWhere" maxlength="30" placeholder="Netflix, Prime…"></label>
+    </div>
+    <label>Episodi per stagione <span class="hint">separati da virgola, es. 10, 10, 8</span><input id="fSeasons" inputmode="numeric" placeholder="10, 10, 8"></label>
+    <div class="two">
+      <label>Stagione attuale<input id="fS" type="number" min="1" value="1"></label>
+      <label>Ultimo episodio visto<input id="fE" type="number" min="0" value="0"></label>
+    </div>
+    <label>Note<textarea id="fNote" rows="2" maxlength="200"></textarea></label>
+  </div>
+  <div class="dacts">
+    <button type="button" class="del" id="fDel">Elimina</button>
+    <button type="button" class="btn ghost" id="fCancel">Annulla</button>
+    <button type="submit" class="btn">Salva</button>
+  </div>
+</form></div>
+
+<!-- Importazione -->
+<div class="ov" id="impOv" role="dialog" aria-modal="true" aria-labelledby="it"><form class="dlg" id="impForm">
+  <h2 id="it">Importa dati</h2>
+  <p class="hint">Incolla il contenuto del file <b>import-dati.json</b> (o di un'esportazione di questa app). Le serie si aggiungono a quelle che hai già.</p>
+  <textarea id="impText" rows="8" placeholder='{"shows":[ ... ]}'></textarea>
+  <p class="fstat" id="impMsg" role="status"></p>
+  <div class="dacts">
+    <button type="button" class="btn ghost" id="exportBtn">Copia i miei dati</button>
+    <button type="button" class="btn ghost" id="impCancel">Chiudi</button>
+    <button type="submit" class="btn">Importa</button>
+  </div>
+</form></div>
+
+<div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="undo">Annulla</button></div>
+
+<script type="module" src="/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
+</script>
+</body>
+</html>
